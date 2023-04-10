@@ -1,24 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using bookStore.Models;
+using bookStore.Repository;
+using Microsoft.AspNetCore.Mvc;
 
 namespace bookStore.Controllers
 {
     public class BookController : Controller
     {
-        public string GetAllBooks()
+        private readonly BookRepository _bookRepository = null;
+        public BookController()
         {
-            return "All Books";
+            _bookRepository = new BookRepository();
+        }
+        public List<BookModel> GetAllBooks()
+        {
+            return _bookRepository.GetAllBooks();
         }
 
-        public string GetBook(int id)
+        public BookModel GetBook(int id)
         {
-            return "book with id = "+id;
+            return _bookRepository.GetBookById(id);
         }
         
-        public string SearchBook(string bookname, string authName)
+        public List<BookModel> SearchBook(string bookname, string authorName)
         {
-            return "Boook found with Book name = " + bookname +
-                " and Author name = " + authName;
+            return _bookRepository.SearchBook(bookname, authorName);
         }
+         
+        //public string AddBook(string name)
+        //{
+        //    return "Book added with name = " + name;
+        //}
     }
 }
  
